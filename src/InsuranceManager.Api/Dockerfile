@@ -4,17 +4,11 @@
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 WORKDIR /src
 
-# Copy project files first for layer caching
-COPY ["src/InsuranceManager.Api/InsuranceManager.Api.csproj", "src/InsuranceManager.Api/"]
-COPY ["src/InsuranceManager.Application/InsuranceManager.Application.csproj", "src/InsuranceManager.Application/"]
-COPY ["src/InsuranceManager.Infrastructure/InsuranceManager.Infrastructure.csproj", "src/InsuranceManager.Infrastructure/"]
-COPY ["src/InsuranceManager.Domain/InsuranceManager.Domain.csproj", "src/InsuranceManager.Domain/"]
+# Copy all source files
+COPY src/ ./src/
 
 # Restore dependencies
 RUN dotnet restore "src/InsuranceManager.Api/InsuranceManager.Api.csproj"
-
-# Copy source code
-COPY src/ .
 
 # Build the application
 RUN dotnet build "src/InsuranceManager.Api/InsuranceManager.Api.csproj" -c Release -o /app/build
