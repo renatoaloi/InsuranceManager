@@ -18,8 +18,6 @@ services:
     volumes:
       # Share Huey queue directory with worker (bind mount for FileHuey)
       - ./huey_data:/app/huey_data
-    depends_on:
-      - insurance-huey
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
@@ -38,7 +36,8 @@ services:
       # Same volume mount as API - critical for FileHuey exclusive locks
       - ./huey_data:/app/huey_data
     depends_on:
-      - insurance-api
+      insurance-api:
+        condition: service_healthy
     restart: unless-stopped
 
 volumes:
