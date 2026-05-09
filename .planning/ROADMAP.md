@@ -65,7 +65,7 @@ Plans:
 - [ ] 02-03: Implement state machine validation for proposal status transitions
 - [ ] 02-04: Implement CQRS read adapters with optimized query projections
 - [ ] 02-05: Add API Key authentication middleware
-- [ ] 02-06: Configure Huey filesystem broker for Windows + Docker compatibility
+- [x] 02-06: Configure Huey filesystem broker for Windows + Docker compatibility
 
 ### Phase 3: Infrastructure
 
@@ -93,7 +93,7 @@ Plans:
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation | 6/6 | Complete | 2026-05-09 |
-| 2. Status Lifecycle + Auth | 0/6 | Not started | - |
+| 2. Status Lifecycle + Auth | 1/6 | In progress | - |
 | 3. Infrastructure | 0/4 | Not started | - |
 
 ---
