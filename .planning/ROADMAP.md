@@ -31,15 +31,15 @@ Deliver a .NET 10 REST API for insurance proposal-to-policy lifecycle. Phase 1 b
 8. Write operations use dedicated command adapters (CQRS-01)
 9. SQLite database is initialized with proper schema on startup
 
-**Plans**: TBD
+**Plans:** 6 plans
 
 Plans:
-- [ ] 01-01: Set up .NET 10 project structure with hexagonal architecture
-- [ ] 01-02: Implement Proposal and Policy domain entities
-- [ ] 01-03: Configure EF Core with SQLite persistence adapter
-- [ ] 01-04: Implement CQRS command adapters for Proposals and Policies
-- [ ] 01-05: Build Proposal endpoints (create, list, get by ID)
-- [ ] 01-06: Build Policy endpoints (contract, list, get by ID)
+- [x] 01-01-PLAN.md — Set up .NET 10 project structure with hexagonal architecture
+- [x] 01-02-PLAN.md — Implement Proposal and Policy domain entities
+- [x] 01-03-PLAN.md — Configure EF Core with SQLite persistence adapter
+- [x] 01-04-PLAN.md — Implement CQRS command adapters for Proposals and Policies
+- [x] 01-05-PLAN.md — Build Proposal endpoints (create, list, get by ID)
+- [x] 01-06-PLAN.md — Build Policy endpoints (contract, list, get by ID)
 
 ### Phase 2: Status Lifecycle + Auth
 
