@@ -12,7 +12,7 @@ Requirements for initial release. Each maps to roadmap phases.
 - [ ] **PROP-01**: User can create a proposal with basic fields (client name, coverage type)
 - [ ] **PROP-02**: User can list all proposals with optional filters (status, date range)
 - [ ] **PROP-03**: User can get a single proposal by ID
-- [ ] **PROP-04**: User can change proposal status via async queue (Huey)
+- [x] **PROP-04**: User can change proposal status via async queue (Huey)
 - [ ] **PROP-05**: Proposal status transitions: Em Analise → Aprovada or Recusada
 
 ### Policies
@@ -86,7 +86,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | PROP-01 | Phase 1 | Pending |
 | PROP-02 | Phase 1 | Pending |
 | PROP-03 | Phase 1 | Pending |
-| PROP-04 | Phase 2 | Pending |
+| PROP-04 | Phase 2 | Complete |
 | PROP-05 | Phase 2 | Pending |
 | POLI-01 | Phase 1 | Pending |
 | POLI-02 | Phase 1 | Pending |
