@@ -4,6 +4,7 @@ using InsuranceManager.Domain.Entities;
 using InsuranceManager.Domain.Ports;
 using InsuranceManager.Infrastructure.Persistence;
 using InsuranceManager.Infrastructure.Adapters;
+using InsuranceManager.Infrastructure.Adapters.ReadAdapters;
 using InsuranceManager.Api.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +17,7 @@ builder.Services.AddDbContext<InsuranceDbContext>(options =>
 
 builder.Services.AddScoped<IProposalRepository, ProposalRepository>();
 builder.Services.AddScoped<IPolicyRepository, PolicyRepository>();
+builder.Services.AddScoped<IProposalReadAdapter, ProposalReadAdapter>();
 
 builder.Services.AddScoped<ProposalService>();
 builder.Services.AddScoped<PolicyService>();

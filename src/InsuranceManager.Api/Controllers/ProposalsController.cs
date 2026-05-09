@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using InsuranceManager.Application.Commands;
 using InsuranceManager.Application.Services;
 using InsuranceManager.Api.DTOs;
+using InsuranceManager.Domain.Ports;
 using InsuranceManager.Domain.ValueObjects;
 
 namespace InsuranceManager.Api.Controllers;
@@ -11,8 +12,13 @@ namespace InsuranceManager.Api.Controllers;
 public class ProposalsController : ControllerBase
 {
     private readonly ProposalService _proposalService;
+    private readonly IProposalReadAdapter _readAdapter;
 
-    public ProposalsController(ProposalService proposalService) => _proposalService = proposalService;
+    public ProposalsController(ProposalService proposalService, IProposalReadAdapter readAdapter)
+    {
+        _proposalService = proposalService;
+        _readAdapter = readAdapter;
+    }
 
     [HttpPost]
     public async Task<ActionResult<ProposalResponseDto>> Create(
@@ -25,12 +31,12 @@ public class ProposalsController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IReadOnlyList<ProposalResponseDto>>> GetAll(
-        [FromQuery] ProposalStatus? status,
-        CancellationToken ct)
+    public async Task<ActionResult<IEnumerable<ProposalResponseDto>>> GetAll(
+        [FromQuery] ProposalStatus? status = null,
+        CancellationToken ct = default)
     {
-        var proposals = await _proposalService.GetAllAsync(status, ct);
-        return Ok(proposals.Select(p => p.ToDto()).ToList());
+        var proposals = await _readAdapter.GetAllAsync(status, ct: ct);
+        return Ok(proposals.Select(p => new ProposalResponseDto(p.Id, p.ClientName, p.CoverageType, p.Status, p.CreatedAt, p.UpdatedAt)));
     }
 
     [HttpGet("{id:guid}")]
