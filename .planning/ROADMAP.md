@@ -6,7 +6,7 @@ Deliver a .NET 10 REST API for insurance proposal-to-policy lifecycle. Phase 1 b
 
 ## Phases
 
-- [ ] **Phase 1: Foundation** - Domain entities, SQLite persistence, basic Proposal/Policy CRUD
+- [x] **Phase 1: Foundation** - Domain entities, SQLite persistence, basic Proposal/Policy CRUD
 - [ ] **Phase 2: Status Lifecycle + Auth** - Huey async status transitions, CQRS read models, API Key authentication
 - [ ] **Phase 3: Infrastructure** - Docker containers, Huey worker, filesystem broker
 
@@ -92,7 +92,7 @@ Plans:
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation | 0/6 | Not started | - |
+| 1. Foundation | 6/6 | Complete | 2026-05-09 |
 | 2. Status Lifecycle + Auth | 0/6 | Not started | - |
 | 3. Infrastructure | 0/4 | Not started | - |
 
