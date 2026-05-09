@@ -34,3 +34,12 @@ artifacts/
 appsettings.Development.json
 appsettings.local.json
 .DS_Store
+
+# Environment files with secrets
+.env
+
+# Huey queue directory (created at runtime)
+huey_data/
+
+# SQLite database
+*.db

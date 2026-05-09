@@ -1,0 +1,46 @@
+# Insurance Manager - Docker Compose Configuration
+# API and Huey worker orchestration
+
+services:
+  insurance-api:
+    build:
+      context: .
+      dockerfile: src/InsuranceManager.Api/Dockerfile
+    ports:
+      - "5000:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:8080
+      - API_KEY=${API_KEY}
+      - ConnectionStrings__DefaultConnection=Data Source=insurance.db
+      - Huey__QueuePath=/app/huey_data
+      - Huey__PythonPath=python
+    volumes:
+      # Share Huey queue directory with worker (bind mount for FileHuey)
+      - ./huey_data:/app/huey_data
+    depends_on:
+      - insurance-huey
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+
+  insurance-huey:
+    build:
+      context: .
+      dockerfile: Dockerfile.huey
+    environment:
+      - API_BASE_URL=http://insurance-api:8080
+      - INTERNAL_API_KEY=${INTERNAL_API_KEY:-internal-secret-change-me}
+    volumes:
+      # Same volume mount as API - critical for FileHuey exclusive locks
+      - ./huey_data:/app/huey_data
+    depends_on:
+      - insurance-api
+    restart: unless-stopped
+
+volumes:
+  huey_data:
+    driver: local
