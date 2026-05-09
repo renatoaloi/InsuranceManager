@@ -46,5 +46,15 @@ public class Proposal
         UpdatedAt = DateTime.UtcNow;
     }
 
+    public bool CanTransitionTo(ProposalStatus targetStatus)
+    {
+        return (Status, targetStatus) switch
+        {
+            (ProposalStatus.EmAnalise, ProposalStatus.Aprovada) => true,
+            (ProposalStatus.EmAnalise, ProposalStatus.Recusada) => true,
+            _ => false
+        };
+    }
+
     public bool CanBeContracted() => Status == ProposalStatus.Aprovada;
 }
