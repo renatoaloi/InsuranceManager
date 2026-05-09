@@ -57,15 +57,24 @@ Plans:
 5. All API endpoints require valid API Key in X-API-Key header
 6. Requests with missing or invalid API Key receive 401 Unauthorized response
 
-**Plans**: TBD
+**Plans**: 6 plans
 
 Plans:
+<<<<<<< Updated upstream
 - [ ] 02-01: Implement Huey consumer service for status transitions
 - [ ] 02-02: Add status change endpoint with async queue submission (POST /api/proposals/{id}/status)
 - [ ] 02-03: Implement state machine validation for proposal status transitions
 - [ ] 02-04: Implement CQRS read adapters with optimized query projections
 - [ ] 02-05: Add API Key authentication middleware
 - [x] 02-06: Configure Huey filesystem broker for Windows + Docker compatibility
+=======
+- [ ] 02-01: Implement state machine validation for proposal status transitions (CanTransitionTo method)
+- [ ] 02-02: Implement status change command and update ProposalService
+- [ ] 02-03: Define IProposalReadAdapter port interface in Domain layer
+- [ ] 02-04: Implement IProposalReadAdapter in Infrastructure and update controllers
+- [ ] 02-05: Add API Key authentication middleware (X-API-Key header validation)
+- [ ] 02-06: Configure Huey filesystem broker and create consumer script
+>>>>>>> Stashed changes
 
 ### Phase 3: Infrastructure
 
