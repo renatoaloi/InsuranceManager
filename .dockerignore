@@ -1,0 +1,13 @@
+.git/
+src/
+bin/
+obj/
+*.md
+*.txt
+!requirements-huey.txt
+*.db
+huey_data/
+.vs/
+.vscode/
+*.user
+*.suo
