@@ -4,6 +4,7 @@ using InsuranceManager.Domain.Entities;
 using InsuranceManager.Domain.Ports;
 using InsuranceManager.Infrastructure.Persistence;
 using InsuranceManager.Infrastructure.Adapters;
+using InsuranceManager.Api.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +21,9 @@ builder.Services.AddScoped<ProposalService>();
 builder.Services.AddScoped<PolicyService>();
 
 var app = builder.Build();
+
+// Add API Key authentication middleware
+app.UseApiKeyAuthentication();
 
 using (var scope = app.Services.CreateScope())
 {
