@@ -7,7 +7,7 @@ Deliver a .NET 10 REST API for insurance proposal-to-policy lifecycle. Phase 1 b
 ## Phases
 
 - [x] **Phase 1: Foundation** - Domain entities, SQLite persistence, basic Proposal/Policy CRUD
-- [ ] **Phase 2: Status Lifecycle + Auth** - Huey async status transitions, CQRS read models, API Key authentication
+- [x] **Phase 2: Status Lifecycle + Auth** - Huey async status transitions, CQRS read models, API Key authentication
 - [ ] **Phase 3: Infrastructure** - Docker containers, Huey worker, filesystem broker
 
 ## Phase Details
@@ -31,7 +31,7 @@ Deliver a .NET 10 REST API for insurance proposal-to-policy lifecycle. Phase 1 b
 8. Write operations use dedicated command adapters (CQRS-01)
 9. SQLite database is initialized with proper schema on startup
 
-**Plans:** 6 plans
+**Plans:** 6 plans (all complete)
 
 Plans:
 - [x] 01-01-PLAN.md — Set up .NET 10 project structure with hexagonal architecture
@@ -57,24 +57,15 @@ Plans:
 5. All API endpoints require valid API Key in X-API-Key header
 6. Requests with missing or invalid API Key receive 401 Unauthorized response
 
-**Plans**: 6 plans
+**Plans:** 6 plans (all complete)
 
 Plans:
-<<<<<<< Updated upstream
-- [ ] 02-01: Implement Huey consumer service for status transitions
-- [ ] 02-02: Add status change endpoint with async queue submission (POST /api/proposals/{id}/status)
-- [ ] 02-03: Implement state machine validation for proposal status transitions
-- [ ] 02-04: Implement CQRS read adapters with optimized query projections
-- [ ] 02-05: Add API Key authentication middleware
-- [x] 02-06: Configure Huey filesystem broker for Windows + Docker compatibility
-=======
-- [ ] 02-01: Implement state machine validation for proposal status transitions (CanTransitionTo method)
-- [ ] 02-02: Implement status change command and update ProposalService
-- [ ] 02-03: Define IProposalReadAdapter port interface in Domain layer
-- [ ] 02-04: Implement IProposalReadAdapter in Infrastructure and update controllers
-- [ ] 02-05: Add API Key authentication middleware (X-API-Key header validation)
-- [ ] 02-06: Configure Huey filesystem broker and create consumer script
->>>>>>> Stashed changes
+- [x] 02-01-PLAN.md — Implement state machine validation for proposal status transitions (CanTransitionTo method)
+- [x] 02-02-PLAN.md — Implement status change command and update ProposalService
+- [x] 02-03-PLAN.md — Define IProposalReadAdapter port interface in Domain layer
+- [x] 02-04-PLAN.md — Implement IProposalReadAdapter in Infrastructure and update controllers
+- [x] 02-05-PLAN.md — Add API Key authentication middleware (X-API-Key header validation)
+- [x] 02-06-PLAN.md — Configure Huey filesystem broker and create consumer script
 
 ### Phase 3: Infrastructure
 
@@ -102,10 +93,10 @@ Plans:
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation | 6/6 | Complete | 2026-05-09 |
-| 2. Status Lifecycle + Auth | 1/6 | In progress | - |
+| 2. Status Lifecycle + Auth | 6/6 | Complete | 2026-05-09 |
 | 3. Infrastructure | 0/4 | Not started | - |
 
 ---
 
 *Roadmap created: 2026-05-09*
-*Granularity: coarse*
+*Last updated: 2026-05-09 after Phase 2 completion*
