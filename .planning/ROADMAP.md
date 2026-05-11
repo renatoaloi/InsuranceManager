@@ -28,7 +28,7 @@
 
 **Milestone Goal:** Fix core leaks by moving HueyTaskRunner from Application layer to Infrastructure, connected via port/adapter pattern.
 
-- [ ] **Phase 5: Port & Adapter Foundation** - Create IHueyTaskRunner port interface and HueyTaskRunnerAdapter
+- [x] **Phase 5: Port & Adapter Foundation** - Create IHueyTaskRunner port interface and HueyTaskRunnerAdapter (completed 2026-05-11)
 - [ ] **Phase 6: Integration & Architecture Validation** - Wire up DI and verify Domain layer isolation
 
 ## Phase Details
@@ -45,7 +45,7 @@
   5. Solution builds successfully with HueyTaskRunner in Infrastructure
 **Plans**: 1 plan
 Plans:
-- [ ] 05-01-PLAN.md — Create IHueyTaskRunner port in Domain and HueyTaskRunnerAdapter in Infrastructure
+- [x] 05-01-PLAN.md — Create IHueyTaskRunner port in Domain and HueyTaskRunnerAdapter in Infrastructure
 
 ### Phase 6: Integration & Architecture Validation
 **Goal**: Application services use injected task runner; Domain layer verified to have zero external dependencies
@@ -66,7 +66,7 @@ Phases execute in numeric order: 5 → 6
 
 | Phase | Milestone | Plans Complete | Status | Completed |
 |-------|-----------|----------------|--------|-----------|
-| 5. Port & Adapter Foundation | v1.2 | 0/TBD | Not started | - |
+| 5. Port & Adapter Foundation | v1.2 | 1/1 | Complete   | 2026-05-11 |
 | 6. Integration & Architecture Validation | v1.2 | 0/TBD | Not started | - |
 
 ---
