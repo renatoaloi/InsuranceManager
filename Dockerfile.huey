@@ -8,7 +8,7 @@ WORKDIR /app
 RUN pip install --no-cache-dir huey requests
 
 # Copy Huey files
-COPY ["src/InsuranceManager.Application/Huey/", "./Huey/"]
+COPY ["infra/app/", "."]
 
 # Create huey_data directory and non-root user
 RUN mkdir -p /app/huey_data && chown -R 1000:1000 /app/huey_data
@@ -18,7 +18,7 @@ USER worker
 
 ENV HUEY_QUEUE_PATH=/app/huey_data
 ENV API_BASE_URL=http://insurance-api:8080
-ENV INTERNAL_API_KEY=internal-secret-change-me
+ENV INTERNAL_API_KEY=dev-api-key-change-in-production
 
 # Use direct script approach per D-01, with -u for unbuffered stdout
-CMD ["python", "-u", "Huey/huey_consumer.py"]
+CMD ["python", "-u", "huey_consumer.py"]
