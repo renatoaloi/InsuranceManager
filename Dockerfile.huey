@@ -20,5 +20,5 @@ ENV HUEY_QUEUE_PATH=/app/huey_data
 ENV API_BASE_URL=http://insurance-api:8080
 ENV INTERNAL_API_KEY=internal-secret-change-me
 
-# Use direct script approach per D-01
-CMD ["python", "Huey/huey_consumer.py"]
+# Use direct script approach per D-01, with -u for unbuffered stdout
+CMD ["python", "-u", "Huey/huey_consumer.py"]
