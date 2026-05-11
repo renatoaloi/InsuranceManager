@@ -1,9 +1,9 @@
 ---
-status: testing
+status: diagnosed
 phase: 04-huey-bugfixes
 source: 04-01-SUMMARY.md, 04-02-SUMMARY.md
 started: 2026-05-11T00:07:00Z
-updated: 2026-05-11T00:07:00Z
+updated: 2026-05-11T00:08:00Z
 ---
 
 ## Current Test
@@ -50,5 +50,10 @@ blocked: 0
   reason: "User reported: log is empty, huey_data only has .lock file"
   severity: major
   test: 3
-  artifacts: []
-  missing: []
+  root_cause: "Python stdout fully buffered in non-interactive mode - print() statements execute but aren't visible in docker logs"
+  artifacts:
+    - path: "Dockerfile.huey"
+      issue: "CMD uses python without -u flag for unbuffered output"
+  missing:
+    - "Add PYTHONUNBUFFERED=1 env var or use python -u flag"
+  debug_session: ""
