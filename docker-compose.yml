@@ -12,6 +12,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_URLS=http://+:8080
       - API_KEY=${API_KEY}
+      - INTERNAL_API_KEY=${INTERNAL_API_KEY:-internal-secret-change-me}
       - ConnectionStrings__DefaultConnection=Data Source=insurance.db
       - Huey__QueuePath=/app/huey_data
       - Huey__PythonPath=python

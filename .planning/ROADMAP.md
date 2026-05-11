@@ -113,8 +113,8 @@ Plans:
 **Plans:** 3/3 planned
 
 Plans:
-- [ ] 04-01-PLAN.md — Fix Dockerfile.huey CMD to use direct script approach
-- [ ] 04-02-PLAN.md — Fix docker-compose.yml volume configuration
+- [x] 04-01-PLAN.md — Fix Dockerfile.huey CMD to use direct script approach
+- [x] 04-02-PLAN.md — Fix docker-compose.yml volume configuration
 - [ ] 04-03-PLAN.md — End-to-end verification of Huey task processing
 
 ## Progress

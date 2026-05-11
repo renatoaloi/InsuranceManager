@@ -26,6 +26,13 @@ public class ApiKeyMiddleware
             return;
         }
 
+        // Skip internal endpoints (they have their own authentication)
+        if (context.Request.Path.StartsWithSegments("/internal"))
+        {
+            await _next(context);
+            return;
+        }
+
         // Check if API Key header exists
         if (!context.Request.Headers.TryGetValue(ApiKeyHeaderName, out var extractedApiKey))
         {

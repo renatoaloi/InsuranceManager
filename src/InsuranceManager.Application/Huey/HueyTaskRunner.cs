@@ -11,15 +11,13 @@ public interface IHueyTaskRunner
 public class HueyTaskRunner : IHueyTaskRunner
 {
     private readonly string _hueyDir;
-    private readonly string _pythonPath;
 
     public HueyTaskRunner(IConfiguration configuration)
     {
-        _hueyDir = configuration["Huey:QueuePath"] ?? "./huey_data";
-        _pythonPath = configuration["Huey:PythonPath"] ?? "python";
+        _hueyDir = configuration["Huey:QueuePath"] ?? "/app/huey_data";
     }
 
-    public async Task EnqueueStatusChangeAsync(Guid proposalId, ProposalStatus newStatus, CancellationToken ct = default)
+    public Task EnqueueStatusChangeAsync(Guid proposalId, ProposalStatus newStatus, CancellationToken ct = default)
     {
         var statusStr = newStatus switch
         {
@@ -28,42 +26,22 @@ public class HueyTaskRunner : IHueyTaskRunner
             _ => throw new ArgumentException($"Invalid status for enqueue: {newStatus}")
         };
 
-        // Ensure huey data directory exists
+        Console.WriteLine($"HueyTaskRunner.EnqueueStatusChangeAsync: proposalId={proposalId}, statusStr={statusStr}, hueyDir={_hueyDir}");
+
         Directory.CreateDirectory(_hueyDir);
 
-        var pythonCode = $@"
-import sys
-import os
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'Application', 'Huey'))
-from huey_config import huey
-
-@huey.task()
-def process_status_change(proposal_id, new_status):
-    pass
-
-huey.enqueue(process_status_change('{proposalId}', '{statusStr}'))
-";
-
-        var psi = new System.Diagnostics.ProcessStartInfo
+        var taskFile = Path.Combine(_hueyDir, $"enqueue_{proposalId}_{DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()}.json");
+        var taskData = System.Text.Json.JsonSerializer.Serialize(new
         {
-            FileName = _pythonPath,
-            Arguments = $"-c \"{pythonCode.Replace("\"", "\\\"")}\"",
-            WorkingDirectory = Directory.GetCurrentDirectory(),
-            RedirectStandardOutput = true,
-            RedirectStandardError = true,
-            UseShellExecute = false,
-            CreateNoWindow = true
-        };
+            task = "process_status_change",
+            args = new[] { proposalId.ToString(), statusStr },
+            enqueued = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
+        });
 
-        using var process = System.Diagnostics.Process.Start(psi);
-        if (process != null)
-        {
-            await process.WaitForExitAsync(ct);
-            if (process.ExitCode != 0)
-            {
-                var error = await process.StandardError.ReadToEndAsync(ct);
-                throw new InvalidOperationException($"Huey enqueue failed: {error}");
-            }
-        }
+        Console.WriteLine($"Writing task file: {taskFile}");
+        File.WriteAllText(taskFile, taskData);
+        Console.WriteLine($"Task file written successfully");
+
+        return Task.CompletedTask;
     }
 }

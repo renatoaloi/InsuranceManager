@@ -1,4 +1,5 @@
 using InsuranceManager.Application.Commands;
+using InsuranceManager.Application.Huey;
 using InsuranceManager.Domain.Entities;
 using InsuranceManager.Domain.Ports;
 using InsuranceManager.Domain.ValueObjects;
@@ -9,11 +10,13 @@ public class ProposalService
 {
     private readonly IProposalRepository _repository;
     private readonly IProposalReadAdapter _readAdapter;
+    private readonly IHueyTaskRunner? _hueyTaskRunner;
 
-    public ProposalService(IProposalRepository repository, IProposalReadAdapter readAdapter)
+    public ProposalService(IProposalRepository repository, IProposalReadAdapter readAdapter, IHueyTaskRunner? hueyTaskRunner = null)
     {
         _repository = repository;
         _readAdapter = readAdapter;
+        _hueyTaskRunner = hueyTaskRunner;
     }
 
     public async Task<Proposal> CreateAsync(CreateProposalCommand command, CancellationToken ct = default)
@@ -42,10 +45,19 @@ public class ProposalService
         if (!proposal.CanTransitionTo(command.NewStatus))
             throw new InvalidOperationException($"Invalid transition from {proposal.Status} to {command.NewStatus}");
 
-        // Enqueue to Huey (via HueyTaskRunner - injected if available)
-        // TODO: Integrate HueyTaskRunner when background service is implemented
-        // For now, mark as enqueued - actual processing happens via huey consumer
-        await Task.CompletedTask;
+        Console.WriteLine($"EnqueueStatusChangeAsync called with proposalId={command.ProposalId}, newStatus={command.NewStatus}");
+
+        if (_hueyTaskRunner != null)
+        {
+            Console.WriteLine($"Calling HueyTaskRunner.EnqueueStatusChangeAsync");
+            await _hueyTaskRunner.EnqueueStatusChangeAsync(command.ProposalId, command.NewStatus, ct);
+            Console.WriteLine("HueyTaskRunner.EnqueueStatusChangeAsync completed");
+        }
+        else
+        {
+            Console.WriteLine("HueyTaskRunner is null, skipping enqueue");
+            await Task.CompletedTask;
+        }
     }
 
     public async Task<Proposal> ChangeStatusAsync(ChangeProposalStatusCommand command, CancellationToken ct = default)

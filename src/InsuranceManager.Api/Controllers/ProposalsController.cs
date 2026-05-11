@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Mvc;
 using InsuranceManager.Application.Commands;
 using InsuranceManager.Application.Services;
@@ -85,4 +86,55 @@ public class ProposalsController : ControllerBase
             return BadRequest(new { error = ex.Message });
         }
     }
+}
+
+[ApiController]
+[Route("internal")]
+public class InternalController : ControllerBase
+{
+    private readonly ProposalService _proposalService;
+
+    public InternalController(ProposalService proposalService)
+    {
+        _proposalService = proposalService;
+    }
+
+    [HttpPost("status")]
+    public async Task<ActionResult> UpdateStatus(
+        [FromBody] InternalStatusUpdateDto dto,
+        [FromHeader(Name = "X-Internal-Key")] string? internalKey,
+        CancellationToken ct)
+    {
+        var expectedKey = Environment.GetEnvironmentVariable("INTERNAL_API_KEY") ?? "internal-secret-change-me";
+
+        Console.WriteLine($"Internal API called with key={internalKey}, expected={expectedKey}");
+
+        if (string.IsNullOrEmpty(internalKey) || !string.Equals(internalKey, expectedKey, StringComparison.Ordinal))
+        {
+            return Unauthorized(new { error = "Invalid internal API key" });
+        }
+
+        try
+        {
+            var newStatus = (ProposalStatus)dto.Status;
+            Console.WriteLine($"Processing status change for proposal {dto.ProposalId} to {newStatus}");
+            var command = new ChangeProposalStatusCommand(Guid.Parse(dto.ProposalId), newStatus);
+            await _proposalService.ChangeStatusAsync(command, ct);
+            return Ok(new { message = "Status updated", proposalId = dto.ProposalId, status = dto.Status });
+        }
+        catch (InvalidOperationException ex)
+        {
+            Console.WriteLine($"Error updating status: {ex.Message}");
+            return BadRequest(new { error = ex.Message });
+        }
+    }
+}
+
+public class InternalStatusUpdateDto
+{
+    [JsonPropertyName("proposalId")]
+    public string ProposalId { get; init; } = string.Empty;
+
+    [JsonPropertyName("status")]
+    public int Status { get; init; }
 }
