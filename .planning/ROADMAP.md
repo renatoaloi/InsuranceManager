@@ -3,7 +3,7 @@
 ## Milestones
 
 - ✅ **v1.0 MVP** — Phases 1-3 (shipped 2026-05-11)
-- ✅ **v1.1 Bugfixes & Stability** — Phase 4 (complete)
+- ✅ **v1.1 Bugfixes & Stability** — Phase 4 (shipped 2026-05-11)
 
 ## Phases
 
@@ -16,32 +16,20 @@
 
 </details>
 
-### ✅ Phase 4: Huey Bugfixes (Complete)
+<details>
+<summary>✅ v1.1 Bugfixes & Stability (Phase 4) — SHIPPED 2026-05-11</summary>
 
-**Goal**: Fix Huey container startup issues and ensure worker processes tasks from filesystem queue
+- [x] Phase 4: Huey Bugfixes (3/3 plans) — completed 2026-05-11
 
-**Depends on**: Phase 3
+</details>
 
-**Status**: ✅ Complete
+## Backlog
 
-**Plans:** 3/3 planned
-
-Plans:
-- [x] 04-01-PLAN.md — Fix Dockerfile.huey CMD to use direct script approach
-- [x] 04-02-PLAN.md — Fix docker-compose.yml volume configuration
-- [x] 04-03-PLAN.md — Fix Huey Worker Logging
-
-## Progress
-
-| Phase | Milestone | Plans Complete | Status | Completed |
-|-------|-----------|----------------|--------|-----------|
-| 1. Foundation | v1.0 | 6/6 | Complete | 2026-05-09 |
-| 2. Status Lifecycle + Auth | v1.0 | 6/6 | Complete | 2026-05-09 |
-| 3. Infrastructure | v1.0 | 4/4 | Complete | 2026-05-10 |
-| 4. Huey Bugfixes | v1.1 | 3/3 | Complete | 2026-05-11 |
+- [ ] Phase 5: [Next milestone - pending]
+- [ ] Phase 6: [Future milestone]
 
 ---
 
 *Roadmap created: 2026-05-09*
-*Last updated: 2026-05-11 after v1.0 milestone shipped*
-*Archived: .planning/milestones/v1.0-ROADMAP.md*
+*Last updated: 2026-05-11 after v1.1 milestone shipped*
+*Archived: .planning/milestones/v1.1-ROADMAP.md*

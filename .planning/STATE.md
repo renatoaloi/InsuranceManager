@@ -1,15 +1,15 @@
 ---
 gsd_state_version: 1.0
-milestone: v1.1
-milestone_name: Bugfixes & Stability
-status: completed
-last_updated: "2026-05-11T01:05:10.601Z"
-last_activity: 2026-05-11 -- Phase 04 execution complete
+milestone: none
+milestone_name: ""
+status: planning
+last_updated: "2026-05-11T04:00:00Z"
+last_activity: 2026-05-11 -- v1.1 milestone complete
 progress:
   total_phases: 4
   completed_phases: 4
   total_plans: 19
-  completed_plans: 16
+  completed_plans: 19
   percent: 100
 ---
 
@@ -17,18 +17,15 @@ progress:
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-05-10)
+See: .planning/PROJECT.md (updated 2026-05-11)
 
 **Core value:** Proposta de seguro segue fluxo de estados via mensageria assíncrona, resultando em apólice quando aprovada.
 
-**Current focus:** Phase 04 — huey-bugfixes
+**Current focus:** Planning next milestone — use /gsd-new-milestone
 
 ## Current Position
 
-Phase: 04 (huey-bugfixes) — COMPLETE
-Plan: 3 of 3
-Status: Phase Complete
-Last activity: 2026-05-11 -- Phase 04 execution complete
+All phases complete. v1.1 shipped.
 
 ## Accumulated Context
 
@@ -40,11 +37,12 @@ Last activity: 2026-05-11 -- Phase 04 execution complete
 - API Key authentication middleware
 - Docker containers for API and Huey worker
 
-### v1.1 Focus
+### v1.1 Validated
 
-- Huey container startup fixes
-- Huey worker broker connectivity
-- Critical bug fixes
+- Huey container startup fixes (direct script path, non-root user)
+- Volume configuration conflict resolved (bind mount only)
+- Python unbuffered output for Docker log visibility
 
 ---
-*State updated: 2026-05-10 after v1.1 milestone started*
+*State updated: 2026-05-11 after v1.1 milestone shipped*
+*All phases complete — ready for next milestone*

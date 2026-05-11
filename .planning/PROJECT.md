@@ -8,10 +8,10 @@ Sistema de seguros simples com API REST em .NET 10. Gerencia o ciclo de vida de 
 
 Proposta de seguro segue fluxo de estados via mensageria assíncrona, resultando em apólice quando aprovada.
 
-## Current State (v1.0 Shipped)
+## Current State (v1.1 Shipped)
 
 **Shipped:** 2026-05-11
-**Version:** v1.0 MVP
+**Version:** v1.1 Bugfixes & Stability
 **Stack:** .NET 10, C# 12, SQLite, Huey (filesystem broker), Docker
 **Architecture:** Hexagonal / Ports & Adapters / DDD
 **Pattern:** CQRS com adaptadores isolados para leitura e escrita
@@ -23,10 +23,11 @@ Proposta de seguro segue fluxo de estados via mensageria assíncrona, resultando
 - API Key authentication (X-API-Key header)
 - SQLite persistence with EF Core
 - Docker containerization (API + Huey worker)
+- Huey container starts correctly with proper logging
+- Volume sharing between API and Huey containers works
 
-**Known Issues (v1.1 scope):**
-- Huey container startup needs verification
-- Worker connectivity to filesystem broker needs testing
+**Active Issues:**
+None — v1.1 bugs resolved.
 
 ## Requirements
 
@@ -43,9 +44,7 @@ Proposta de seguro segue fluxo de estados via mensageria assíncrona, resultando
 
 ### Active
 
-- [ ] Huey container inicia e conecta ao broker
-- [ ] Huey worker processa tasks da fila filesystem
-- [ ] Verificação end-to-end do processamento de tasks
+- [ ] [Next milestone pending - use /gsd-new-milestone]
 
 ### Out of Scope
 
@@ -83,16 +82,11 @@ Proposta de seguro segue fluxo de estados via mensageria assíncrona, resultando
 | Item segurado = token 32-char na Policy | Reduzir complexidade v1 | ✅ Implemented |
 | Projeções CQRS via read models | Consultas separadas de escrita | ✅ IProposalReadAdapter implemented |
 
-## Next Milestone Goals (v1.1)
+## Next Milestone Goals
 
-**Goal:** Fix Huey container startup issues and any critical bugs from v1.0
-
-**Target features:**
-- Huey container starts and connects to broker
-- Huey worker processes tasks from filesystem queue
-- End-to-end verification of task processing
+**Status:** No active milestone — use `/gsd-new-milestone` to start planning
 
 ---
 
-*Last updated: 2026-05-11 after v1.0 milestone shipped*
-*Archived: .planning/milestones/v1.0-ROADMAP.md, v1.0-REQUIREMENTS.md*
+*Last updated: 2026-05-11 after v1.1 milestone shipped*
+*Archived: .planning/milestones/v1.0-ROADMAP.md, v1.0-REQUIREMENTS.md, v1.1-ROADMAP.md, v1.1-REQUIREMENTS.md*
