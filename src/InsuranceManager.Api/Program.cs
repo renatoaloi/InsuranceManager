@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using InsuranceManager.Application.Services;
-using InsuranceManager.Application.Huey;
 using InsuranceManager.Domain.Entities;
 using InsuranceManager.Domain.Ports;
+using InsuranceManager.Infrastructure.Huey;
 using InsuranceManager.Infrastructure.Persistence;
 using InsuranceManager.Infrastructure.Adapters;
 using InsuranceManager.Infrastructure.Adapters.ReadAdapters;
@@ -22,7 +22,7 @@ builder.Services.AddScoped<IProposalReadAdapter, ProposalReadAdapter>();
 
 builder.Services.AddScoped<ProposalService>();
 builder.Services.AddScoped<PolicyService>();
-builder.Services.AddScoped<IHueyTaskRunner, HueyTaskRunner>();
+builder.Services.AddScoped<IHueyTaskRunner, HueyTaskRunnerAdapter>();
 
 var app = builder.Build();
 
