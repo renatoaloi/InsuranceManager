@@ -4,7 +4,7 @@
 
 - ✅ **v1.0 MVP** — Phases 1-3 (shipped 2026-05-11)
 - ✅ **v1.1 Bugfixes & Stability** — Phase 4 (shipped 2026-05-11)
-- 🚧 **v1.2 Hexagonal Architecture Enforcement** — Phases 5-6 (in progress)
+- ✅ **v1.2 Hexagonal Architecture Enforcement** — Phases 5-6 (shipped 2026-05-11)
 
 ## Phases
 
@@ -24,12 +24,12 @@
 
 </details>
 
-### 🚧 v1.2 Hexagonal Architecture Enforcement (In Progress)
+### ✅ v1.2 Hexagonal Architecture Enforcement (Complete)
 
 **Milestone Goal:** Fix core leaks by moving HueyTaskRunner from Application layer to Infrastructure, connected via port/adapter pattern.
 
 - [x] **Phase 5: Port & Adapter Foundation** - Create IQueueTaskAdapter port interface and QueueTaskRunnerAdapter (completed 2026-05-11)
-- [ ] **Phase 6: Integration & Architecture Validation** - Wire up DI and verify Domain layer isolation
+- [x] **Phase 6: Integration & Architecture Validation** - Wire up DI and verify Domain layer isolation (completed 2026-05-11)
 
 ## Phase Details
 
@@ -51,6 +51,7 @@ Plans:
 **Goal**: Application services use injected task runner; Domain layer verified to have zero external dependencies
 **Depends on**: Phase 5
 **Requirements**: ARCH-04, ARCH-05
+**Status**: Complete (2026-05-11)
 **Success Criteria** (what must be TRUE):
   1. IQueueTaskAdapter is registered in DI container and injected into consuming Application services
   2. dotnet build --list-deps (or equivalent) shows Domain project has no references to Infrastructure or Application
@@ -59,7 +60,7 @@ Plans:
   5. All task queue operations flow through IQueueTaskAdapter port without Domain knowing about Huey specifics
 **Plans**: 1 plan
 Plans:
-- [ ] 06-01-PLAN.md — Verify architecture tests pass and align documentation naming
+- [x] 06-01-PLAN.md — Verify architecture tests pass and align documentation naming
 
 ## Progress
 
@@ -68,8 +69,8 @@ Phases execute in numeric order: 5 → 6
 
 | Phase | Milestone | Plans Complete | Status | Completed |
 |-------|-----------|----------------|--------|-----------|
-| 5. Port & Adapter Foundation | v1.2 | 1/1 | Complete   | 2026-05-11 |
-| 6. Integration & Architecture Validation | v1.2 | 0/1 | Not started | - |
+| 5. Port & Adapter Foundation | v1.2 | 1/1 | Complete | 2026-05-11 |
+| 6. Integration & Architecture Validation | v1.2 | 1/1 | Complete | 2026-05-11 |
 
 ---
 
