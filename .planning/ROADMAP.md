@@ -103,14 +103,19 @@ Plans:
 
 **Requirements**: BUG-01, BUG-02, BUG-03
 
-**Status**: ○ Not started
+**Status**: ○ In progress
 
 **Success Criteria** (what must be TRUE):
 1. Huey container starts without errors or crashes
 2. Huey worker connects to filesystem broker and processes queued tasks
 3. Both API and Huey containers share the same huey_data volume correctly
 
-**Plans:** Not yet created
+**Plans:** 3/3 planned
+
+Plans:
+- [ ] 04-01-PLAN.md — Fix Dockerfile.huey CMD to use direct script approach
+- [ ] 04-02-PLAN.md — Fix docker-compose.yml volume configuration
+- [ ] 04-03-PLAN.md — End-to-end verification of Huey task processing
 
 ## Progress
 
@@ -119,7 +124,7 @@ Plans:
 | 1. Foundation | 6/6 | Complete | 2026-05-09 |
 | 2. Status Lifecycle + Auth | 6/6 | Complete | 2026-05-09 |
 | 3. Infrastructure | 4/4 | Complete | 2026-05-10 |
-| 4. Huey Bugfixes | 0/TBD | Not started | — |
+| 4. Huey Bugfixes | 0/3 | In progress | — |
 
 ---
 
