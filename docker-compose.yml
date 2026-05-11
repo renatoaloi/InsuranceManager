@@ -40,6 +40,4 @@ services:
         condition: service_healthy
     restart: unless-stopped
 
-volumes:
-  huey_data:
-    driver: local
+# Note: huey_data is shared via bind mount in each service, no named volume needed
