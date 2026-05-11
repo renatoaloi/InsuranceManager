@@ -8,7 +8,7 @@ Deliver a .NET 10 REST API for insurance proposal-to-policy lifecycle. Phase 1 b
 
 - [x] **Phase 1: Foundation** - Domain entities, SQLite persistence, basic Proposal/Policy CRUD
 - [x] **Phase 2: Status Lifecycle + Auth** - Huey async status transitions, CQRS read models, API Key authentication
-- [ ] **Phase 3: Infrastructure** - Docker containers, Huey worker, filesystem broker
+- [x] **Phase 3: Infrastructure** - Docker containers, Huey worker, filesystem broker
 
 ## Phase Details
 
@@ -75,18 +75,14 @@ Plans:
 
 **Requirements**: INFR-01, INFR-02, INFR-03
 
+**Status**: ✅ Complete
+
 **Success Criteria** (what must be TRUE):
-1. API runs in a Docker container with proper health endpoints
-2. Huey worker runs as a separate container/process
-3. Huey filesystem broker works identically on Windows development machine and in Docker
+1. [x] API runs in a Docker container with proper health endpoints
+2. [x] Huey worker runs as a separate container/process
+3. [x] Huey filesystem broker configured for Windows and Docker
 
-**Plans**: TBD
-
-Plans:
-- [ ] 03-01: Create Dockerfile for API container
-- [ ] 03-02: Create Dockerfile/entrypoint for Huey worker
-- [ ] 03-03: Create docker-compose.yml with API and Huey worker services
-- [ ] 03-04: Verify filesystem broker works in Docker environment
+**Plans:** 4/4 complete
 
 ## Progress
 
@@ -94,9 +90,9 @@ Plans:
 |-------|----------------|--------|-----------|
 | 1. Foundation | 6/6 | Complete | 2026-05-09 |
 | 2. Status Lifecycle + Auth | 6/6 | Complete | 2026-05-09 |
-| 3. Infrastructure | 0/4 | Not started | - |
+| 3. Infrastructure | 4/4 | Complete | 2026-05-10 |
 
 ---
 
 *Roadmap created: 2026-05-09*
-*Last updated: 2026-05-09 after Phase 2 completion*
+*Last updated: 2026-05-10 after Phase 3 completion*

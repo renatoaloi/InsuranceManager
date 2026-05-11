@@ -1,32 +1,43 @@
 # Insurance Manager — Agent Guide
 
-## GSD Workflow
-
-Run `/gsd-plan-phase 1` to start Phase 1 execution.
-
 ## Stack
-- .NET 10
-- SQLite
-- Huey (mensageria/background tasks)
-- CQRS (isolamento de adaptadores)
-- Hexagonal / Ports & Adapters / DDD
-- Docker
+- .NET 10 / SQLite / Huey (Python) / Docker
+- Hexagonal architecture (Ports & Adapters)
+- CQRS with isolated read/write adapters
 
 ## Domain
-- **Proposal**: estados (Em analise, Aprovada, Recusada) → cria Policy
-- **Policy**: criada apenas de Proposals aprovadas; registra ativo digital (32-char ID)
-- **ProposalService**: criar, listar, alterar status
-- **PolicyService**: contratar proposta aprovada
+- **Proposal**: lifecycle states (Em analise → Aprovada/Recusada)
+- **Policy**: created only from approved proposals; stores 32-char asset token
+- Services: `ProposalService` (create, list, status changes), `PolicyService` (contract approved proposals)
 
-## Conventions
-- CQRS: adaptadores isolados para leitura e escrita
-- Item segurado = token de ativo digital (32-char ID) na entidade Policy
-- Nao contempla itens segurados separadamente
-
-## Phase 1 — Foundation
-See `.planning/ROADMAP.md` for success criteria and plans.
+## Architecture
+```
+src/
+├── InsuranceManager.Api/        # Controllers, DTOs, middleware
+├── InsuranceManager.Application/ # Commands, services, Huey task runner
+├── InsuranceManager.Domain/     # Entities, value objects, port interfaces
+└── InsuranceManager.Infrastructure/ # Adapters (repositories, read adapters, EF Core)
+```
 
 ## Commands
-- `dotnet build` — Build project
+- `dotnet build` — Build all projects
 - `dotnet test` — Run tests
 - `dotnet run --project src/InsuranceManager.Api` — Run API
+- `docker-compose up --build` — Run API + Huey worker
+
+## API Access
+All endpoints require `X-API-Key` header. Set via `API_KEY` env var (docker-compose uses `${API_KEY}`).
+
+## Huey Background Tasks
+- Queue uses filesystem broker (`./huey_data` directory)
+- Worker runs as separate container/process via `Dockerfile.huey`
+- On Windows, requires Python with `huey` package installed
+
+## Phase Status
+- Phase 1 (Foundation): Complete ✅
+- Phase 2 (Status Lifecycle + Auth): Complete ✅
+- Phase 3 (Infrastructure): Complete ✅
+
+**v1.0 milestone achieved**
+
+See `.planning/ROADMAP.md` for detailed success criteria.
