@@ -8,26 +8,15 @@ Sistema de seguros simples com API REST em .NET 10. Gerencia o ciclo de vida de 
 
 Proposta de seguro segue fluxo de estados via mensageria assíncrona, resultando em apólice quando aprovada.
 
-## Current State (v1.1 Shipped)
+## Current Milestone: v1.2 Hexagonal Architecture Enforcement
 
-**Shipped:** 2026-05-11
-**Version:** v1.1 Bugfixes & Stability
-**Stack:** .NET 10, C# 12, SQLite, Huey (filesystem broker), Docker
-**Architecture:** Hexagonal / Ports & Adapters / DDD
-**Pattern:** CQRS com adaptadores isolados para leitura e escrita
+**Goal:** Fix core leaks by moving HueyTaskRunner from Application layer to Infrastructure, connected via port/adapter pattern.
 
-**What Works:**
-- Proposal CRUD (create, list, get by ID)
-- Proposal status transitions via Huey queue (Em Analise → Aprovada/Recusada)
-- Policy auto-creation when contracting approved proposal
-- API Key authentication (X-API-Key header)
-- SQLite persistence with EF Core
-- Docker containerization (API + Huey worker)
-- Huey container starts correctly with proper logging
-- Volume sharing between API and Huey containers works
-
-**Active Issues:**
-None — v1.1 bugs resolved.
+**Target features:**
+- Move HueyTaskRunner to InsuranceManager.Infrastructure
+- Create IHueyTaskRunner port interface in Domain/Application layer
+- Implement adapter pattern for task queue integration
+- Ensure Domain layer has no dependencies on outer layers
 
 ## Requirements
 
@@ -44,7 +33,10 @@ None — v1.1 bugs resolved.
 
 ### Active
 
-- [ ] [Next milestone pending - use /gsd-new-milestone]
+- [ ] ARCH-01: Move HueyTaskRunner from Application to Infrastructure layer
+- [ ] ARCH-02: Create IHueyTaskRunner port interface in Domain/Application
+- [ ] ARCH-03: Implement adapter pattern for task queue connection
+- [ ] ARCH-04: Verify Domain layer has no external dependencies
 
 ### Out of Scope
 
@@ -82,11 +74,24 @@ None — v1.1 bugs resolved.
 | Item segurado = token 32-char na Policy | Reduzir complexidade v1 | ✅ Implemented |
 | Projeções CQRS via read models | Consultas separadas de escrita | ✅ IProposalReadAdapter implemented |
 
-## Next Milestone Goals
+## Evolution
 
-**Status:** No active milestone — use `/gsd-new-milestone` to start planning
+This document evolves at phase transitions and milestone boundaries.
+
+**After each phase transition** (via `/gsd-transition`):
+1. Requirements invalidated? → Move to Out of Scope with reason
+2. Requirements validated? → Move to Validated with phase reference
+3. New requirements emerged? → Add to Active
+4. Decisions to log? → Add to Key Decisions
+5. "What This Is" still accurate? → Update if drifted
+
+**After each milestone** (via `/gsd-complete-milestone`):
+1. Full review of all sections
+2. Core Value check — still the right priority?
+3. Audit Out of Scope — reasons still valid?
+4. Update Context with current state
 
 ---
 
-*Last updated: 2026-05-11 after v1.1 milestone shipped*
-*Archived: .planning/milestones/v1.0-ROADMAP.md, v1.0-REQUIREMENTS.md, v1.1-ROADMAP.md, v1.1-REQUIREMENTS.md*
+*Last updated: 2026-05-11 after v1.2 milestone started*
+*Previous: v1.1 (Bugfixes & Stability) — shipped 2026-05-11*
