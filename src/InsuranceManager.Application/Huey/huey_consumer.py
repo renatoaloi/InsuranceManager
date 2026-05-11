@@ -3,19 +3,23 @@
 Huey Consumer Worker for Insurance Manager
 Processes status change tasks from the queue.
 
-The consumer calls the API's internal endpoint to update proposal status,
-keeping all DB access through EF Core.
+This file is used by huey CLI. Run with:
+    huey -c huey_consumer.py worker
+
+Or configure in Dockerfile.huey.
 """
-import sys
 import os
 import requests
+from huey import Huey, FileHuey, task
 
-# Add Huey directory to path
-sys.path.insert(0, os.path.dirname(__file__))
-from huey_config import huey
+# FileHuey stores queue data as pickle files in a directory
+huey = FileHuey(
+    'insurance_huey',
+    path=os.environ.get('HUEY_QUEUE_PATH', '/app/huey_data')
+)
 
-# API base URL (from environment or default for local development)
 API_BASE_URL = os.environ.get('API_BASE_URL', 'http://localhost:5000')
+INTERNAL_API_KEY = os.environ.get('INTERNAL_API_KEY', 'internal-secret-change-me')
 
 
 @huey.task()
@@ -30,15 +34,13 @@ def process_status_change(proposal_id: str, new_status: str):
     print(f"Processing status change: proposal_id={proposal_id}, new_status={new_status}")
 
     try:
-        # Call the internal status update endpoint
-        # This keeps DB access through EF Core
         response = requests.post(
             f"{API_BASE_URL}/internal/status",
             json={
                 "proposalId": proposal_id,
                 "newStatus": new_status
             },
-            headers={"X-Internal-Key": os.environ.get('INTERNAL_API_KEY', 'internal-secret')},
+            headers={"X-Internal-Key": INTERNAL_API_KEY},
             timeout=30
         )
 
@@ -46,15 +48,8 @@ def process_status_change(proposal_id: str, new_status: str):
             print(f"Status change successful for proposal {proposal_id}")
         else:
             print(f"Status change failed: {response.status_code} - {response.text}")
-            # Raise to trigger Huey retry
             raise Exception(f"Status change failed: {response.status_code}")
 
     except requests.RequestException as e:
         print(f"Request error processing status change: {e}")
         raise
-
-
-if __name__ == '__main__':
-    # Run the Huey consumer
-    print("Starting Huey consumer worker...")
-    huey.consume()

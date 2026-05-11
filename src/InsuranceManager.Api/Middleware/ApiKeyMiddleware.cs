@@ -19,6 +19,13 @@ public class ApiKeyMiddleware
             return;
         }
 
+        // Skip health check endpoint
+        if (context.Request.Path.Equals("/health"))
+        {
+            await _next(context);
+            return;
+        }
+
         // Check if API Key header exists
         if (!context.Request.Headers.TryGetValue(ApiKeyHeaderName, out var extractedApiKey))
         {

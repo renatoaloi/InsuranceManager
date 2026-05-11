@@ -49,4 +49,40 @@ public class ProposalsController : ControllerBase
             return NotFound();
         return Ok(proposal.ToDto());
     }
+
+    [HttpPatch("{id:guid}")]
+    public async Task<ActionResult<ProposalResponseDto>> ChangeStatus(
+        Guid id,
+        [FromBody] ChangeProposalStatusDto dto,
+        CancellationToken ct)
+    {
+        try
+        {
+            var command = new ChangeProposalStatusCommand(id, dto.Status);
+            var proposal = await _proposalService.ChangeStatusAsync(command, ct);
+            return Ok(proposal.ToDto());
+        }
+        catch (InvalidOperationException ex)
+        {
+            return BadRequest(new { error = ex.Message });
+        }
+    }
+
+    [HttpPost("{id:guid}/status")]
+    public async Task<ActionResult> EnqueueStatusChange(
+        Guid id,
+        [FromBody] ChangeProposalStatusDto dto,
+        CancellationToken ct)
+    {
+        try
+        {
+            var command = new ChangeProposalStatusCommand(id, dto.Status);
+            await _proposalService.EnqueueStatusChangeAsync(command, ct);
+            return Accepted(new { message = "Status change queued", proposalId = id, status = dto.Status });
+        }
+        catch (InvalidOperationException ex)
+        {
+            return BadRequest(new { error = ex.Message });
+        }
+    }
 }

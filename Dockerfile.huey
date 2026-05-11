@@ -14,9 +14,15 @@ COPY --from=builder /install /usr/local
 WORKDIR /app
 COPY ["src/InsuranceManager.Application/Huey/", "./Huey/"]
 
-# Create non-root user for security
-RUN useradd -m worker && chown -R worker /app
+# Create non-root user with proper UID/GID for bind mount compatibility
+RUN useradd -m -u 1000 worker && chown -R 1000:1000 /app
+
 USER worker
 
-# Default command runs the consumer
-CMD ["python", "Huey/huey_consumer.py"]
+# Run Huey worker using Huey CLI
+# Huey 3.x: huey -c <config_module> worker
+ENV HUEY_QUEUE_PATH=/app/huey_data
+ENV API_BASE_URL=http://insurance-api:8080
+ENV INTERNAL_API_KEY=internal-secret-change-me
+
+CMD ["huey", "-c", "Huey/huey_consumer.py", "worker"]

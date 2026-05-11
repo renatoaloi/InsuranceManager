@@ -47,4 +47,26 @@ public class ProposalService
         // For now, mark as enqueued - actual processing happens via huey consumer
         await Task.CompletedTask;
     }
+
+    public async Task<Proposal> ChangeStatusAsync(ChangeProposalStatusCommand command, CancellationToken ct = default)
+    {
+        var proposal = await _repository.GetByIdAsync(command.ProposalId, ct)
+            ?? throw new InvalidOperationException("Proposal not found");
+
+        if (!proposal.CanTransitionTo(command.NewStatus))
+            throw new InvalidOperationException($"Invalid transition from {proposal.Status} to {command.NewStatus}");
+
+        switch (command.NewStatus)
+        {
+            case ProposalStatus.Aprovada:
+                proposal.Approve();
+                break;
+            case ProposalStatus.Recusada:
+                proposal.Reject();
+                break;
+        }
+
+        await _repository.UpdateAsync(proposal, ct);
+        return proposal;
+    }
 }
