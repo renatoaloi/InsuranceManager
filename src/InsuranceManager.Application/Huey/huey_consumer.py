@@ -3,14 +3,16 @@
 Huey Consumer Worker for Insurance Manager
 Processes status change tasks from the queue.
 
-This file is used by huey CLI. Run with:
-    huey -c huey_consumer.py worker
-
-Or configure in Dockerfile.huey.
+Run with: python run_worker.py
 """
 import os
+import sys
 import requests
-from huey import Huey, FileHuey, task
+
+# Add current directory to path
+sys.path.insert(0, os.path.dirname(__file__))
+
+from huey import FileHuey, task
 
 # FileHuey stores queue data as pickle files in a directory
 huey = FileHuey(
@@ -24,22 +26,13 @@ INTERNAL_API_KEY = os.environ.get('INTERNAL_API_KEY', 'internal-secret-change-me
 
 @huey.task()
 def process_status_change(proposal_id: str, new_status: str):
-    """
-    Process a proposal status change request.
-
-    Args:
-        proposal_id: GUID of the proposal to update
-        new_status: Target status ('Aprovada' or 'Recusada')
-    """
+    """Process a proposal status change request."""
     print(f"Processing status change: proposal_id={proposal_id}, new_status={new_status}")
 
     try:
         response = requests.post(
             f"{API_BASE_URL}/internal/status",
-            json={
-                "proposalId": proposal_id,
-                "newStatus": new_status
-            },
+            json={"proposalId": proposal_id, "newStatus": new_status},
             headers={"X-Internal-Key": INTERNAL_API_KEY},
             timeout=30
         )
@@ -53,3 +46,10 @@ def process_status_change(proposal_id: str, new_status: str):
     except requests.RequestException as e:
         print(f"Request error processing status change: {e}")
         raise
+
+
+if __name__ == '__main__':
+    from huey.consumer import Consumer
+    print("Starting Huey consumer worker...")
+    consumer = Consumer(huey)
+    consumer.run()

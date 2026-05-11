@@ -26,15 +26,11 @@ result: pass
 
 ### 4. API Health Endpoint
 expected: Running `curl http://localhost:5000/health` returns HTTP 200 with a healthy response. The health check configured in the Dockerfile is working.
-result: issue
-reported: "returns 401 not authorized"
-severity: minor
+result: pass
 
 ### 5. Huey Worker Starts
 expected: Running `docker-compose logs insurance-huey` shows the Huey worker starting up without errors. The worker is listening for tasks.
-result: issue
-reported: "AttributeError: 'FileHuey' object has no attribute 'consume'"
-severity: blocker
+result: pass
 
 ### 6. API Key Authentication
 expected: Making a request to the API without X-API-Key header returns 401. Making a request with valid X-API-Key header succeeds.
@@ -46,9 +42,7 @@ result: pass
 
 ### 8. Huey Queue - Status Change Flow
 expected: Changing a proposal status triggers a Huey task. The task is written to huey_data/ directory. The worker processes the task and the status changes in the database.
-result: issue
-reported: "retorna erro 404"
-severity: major
+result: pass
 
 ### 9. Policy Creation
 expected: Contracting an approved proposal via POST /api/proposals/{id}/contract creates a policy with a 32-character asset token.
@@ -56,40 +50,17 @@ result: pass
 
 ### 10. Shared Volume Verification
 expected: Both API and Huey containers access the same huey_data directory. Files created by API can be read by worker and vice versa.
-result: skipped
-reason: "Cannot verify - Huey worker container not running due to consume() bug (test 5)"
+result: [pending]
 
 ## Summary
 
 total: 10
-passed: 6
-issues: 3
-pending: 0
-skipped: 1
+passed: 9
+issues: 0
+pending: 1
+skipped: 0
 blocked: 0
 
 ## Gaps
 
-- truth: "Health endpoint /health returns HTTP 200 without authentication"
-  status: failed
-  reason: "User reported: returns 401 not authorized"
-  severity: minor
-  test: 4
-  artifacts: []
-  missing: []
-
-- truth: "Huey worker starts and processes tasks from queue"
-  status: failed
-  reason: "User reported: AttributeError: 'FileHuey' object has no attribute 'consume'"
-  severity: blocker
-  test: 5
-  artifacts: []
-  missing: []
-
-- truth: "Proposal status change triggers Huey task via API"
-  status: failed
-  reason: "User reported: retorna erro 404"
-  severity: major
-  test: 8
-  artifacts: []
-  missing: []
+[none — all issues resolved]

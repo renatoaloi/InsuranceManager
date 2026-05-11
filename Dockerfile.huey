@@ -1,28 +1,23 @@
 # syntax=docker/dockerfile:1
 
-# Build stage for Python dependencies
-FROM python:3.12-slim AS builder
-RUN pip install --no-cache-dir --prefix=/install huey requests
+FROM python:3.12-slim
 
-# Runtime stage
-FROM python:3.12-slim AS runtime
+WORKDIR /app
 
-# Copy installed packages from builder
-COPY --from=builder /install /usr/local
+# Install Huey in runtime
+RUN pip install --no-cache-dir huey requests
 
 # Copy Huey files
-WORKDIR /app
 COPY ["src/InsuranceManager.Application/Huey/", "./Huey/"]
 
-# Create non-root user with proper UID/GID for bind mount compatibility
+# Create non-root user
 RUN useradd -m -u 1000 worker && chown -R 1000:1000 /app
 
 USER worker
 
-# Run Huey worker using Huey CLI
-# Huey 3.x: huey -c <config_module> worker
 ENV HUEY_QUEUE_PATH=/app/huey_data
 ENV API_BASE_URL=http://insurance-api:8080
 ENV INTERNAL_API_KEY=internal-secret-change-me
 
-CMD ["huey", "-c", "Huey/huey_consumer.py", "worker"]
+# Use python -m huey instead of huey command
+CMD ["python", "-m", "huey", "-c", "Huey/huey_consumer.py", "worker"]
