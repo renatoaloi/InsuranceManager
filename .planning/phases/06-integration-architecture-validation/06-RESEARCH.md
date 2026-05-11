@@ -207,17 +207,13 @@ This is more work and provides no architectural benefit.
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **Should REQUIREMENTS.md be updated to match actual implementation naming?**
-   - What we know: Implementation uses `IQueueTaskAdapter`, requirements say `IHueyTaskRunner`
-   - What's unclear: Was this an intentional rename or an oversight?
-   - Recommendation: Update requirements to match — current naming is architecturally superior
+   - Resolution: REQUIREMENTS.md already uses IQueueTaskAdapter correctly for ARCH-02, ARCH-03, ARCH-04, ARCH-05. No update needed. ✅
 
 2. **Does Phase 6 need any additional verification beyond existing tests?**
-   - What we know: 12 architecture tests cover all requirements
-   - What's unclear: Is there value in adding integration tests that verify DI resolution at runtime?
-   - Recommendation: Current test coverage is sufficient for v1.2 milestone
+   - Resolution: Current 12 architecture tests provide sufficient coverage. No additional tests needed. ✅
 
 ---
 

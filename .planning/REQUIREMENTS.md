@@ -9,11 +9,11 @@ Requirements for hexagonal architecture enforcement.
 
 ### Architecture
 
-- [ ] **ARCH-01**: Move HueyTaskRunner from InsuranceManager.Application to InsuranceManager.Infrastructure
-- [ ] **ARCH-02**: Create IHueyTaskRunner port interface in Domain layer (or Application, depending on where port belongs)
-- [ ] **ARCH-03**: Implement HueyTaskRunnerAdapter in Infrastructure that implements IHueyTaskRunner
-- [ ] **ARCH-04**: Inject IHueyTaskRunner via dependency injection in Application services
-- [ ] **ARCH-05**: Verify Domain layer has no direct dependencies on Infrastructure or Application layers
+- [x] **ARCH-01**: Move HueyTaskRunner from InsuranceManager.Application to InsuranceManager.Infrastructure (Phase 5)
+- [x] **ARCH-02**: Create IQueueTaskAdapter port interface in Domain layer
+- [x] **ARCH-03**: Implement QueueTaskRunnerAdapter in Infrastructure that implements IQueueTaskAdapter
+- [x] **ARCH-04**: Inject IQueueTaskAdapter via dependency injection in Application services
+- [x] **ARCH-05**: Verify Domain layer has no direct dependencies on Infrastructure or Application layers
 
 ## v2 Requirements
 
@@ -42,11 +42,11 @@ Deferred to future release. Tracked but not in current roadmap.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| ARCH-01 | Phase 5 | Pending |
-| ARCH-02 | Phase 5 | Pending |
-| ARCH-03 | Phase 5 | Pending |
-| ARCH-04 | Phase 6 | Pending |
-| ARCH-05 | Phase 6 | Pending |
+| ARCH-01 | Phase 5 | Complete |
+| ARCH-02 | Phase 5 | Complete |
+| ARCH-03 | Phase 5 | Complete |
+| ARCH-04 | Phase 6 | Complete |
+| ARCH-05 | Phase 6 | Complete |
 
 **Coverage:**
 - v1.2 requirements: 5 total
