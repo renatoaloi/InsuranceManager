@@ -43,7 +43,9 @@
   3. HueyTaskRunnerAdapter class exists in InsuranceManager.Infrastructure implementing IHueyTaskRunner
   4. Application services that execute tasks depend on IHueyTaskRunner abstraction, not concrete implementation
   5. Solution builds successfully with HueyTaskRunner in Infrastructure
-**Plans**: TBD
+**Plans**: 1 plan
+Plans:
+- [ ] 05-01-PLAN.md — Create IHueyTaskRunner port in Domain and HueyTaskRunnerAdapter in Infrastructure
 
 ### Phase 6: Integration & Architecture Validation
 **Goal**: Application services use injected task runner; Domain layer verified to have zero external dependencies
