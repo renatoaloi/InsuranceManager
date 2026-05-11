@@ -1,5 +1,4 @@
 using InsuranceManager.Application.Commands;
-using InsuranceManager.Application.Huey;
 using InsuranceManager.Domain.Entities;
 using InsuranceManager.Domain.Ports;
 using InsuranceManager.Domain.ValueObjects;
@@ -10,9 +9,9 @@ public class ProposalService
 {
     private readonly IProposalRepository _repository;
     private readonly IProposalReadAdapter _readAdapter;
-    private readonly IHueyTaskRunner? _hueyTaskRunner;
+    private readonly IQueueTaskAdapter? _hueyTaskRunner;
 
-    public ProposalService(IProposalRepository repository, IProposalReadAdapter readAdapter, IHueyTaskRunner? hueyTaskRunner = null)
+    public ProposalService(IProposalRepository repository, IProposalReadAdapter readAdapter, IQueueTaskAdapter? hueyTaskRunner = null)
     {
         _repository = repository;
         _readAdapter = readAdapter;

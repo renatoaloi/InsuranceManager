@@ -1,18 +1,14 @@
 using Microsoft.Extensions.Configuration;
+using InsuranceManager.Domain.Ports;
 using InsuranceManager.Domain.ValueObjects;
 
-namespace InsuranceManager.Application.Huey;
+namespace InsuranceManager.Infrastructure.Queue;
 
-public interface IHueyTaskRunner
-{
-    Task EnqueueStatusChangeAsync(Guid proposalId, ProposalStatus newStatus, CancellationToken ct = default);
-}
-
-public class HueyTaskRunner : IHueyTaskRunner
+public class QueueTaskRunnerAdapter : IQueueTaskAdapter
 {
     private readonly string _hueyDir;
 
-    public HueyTaskRunner(IConfiguration configuration)
+    public QueueTaskRunnerAdapter(IConfiguration configuration)
     {
         _hueyDir = configuration["Huey:QueuePath"] ?? "/app/huey_data";
     }
