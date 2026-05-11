@@ -2,13 +2,13 @@ using Microsoft.Extensions.Configuration;
 using InsuranceManager.Domain.Ports;
 using InsuranceManager.Domain.ValueObjects;
 
-namespace InsuranceManager.Infrastructure.Huey;
+namespace InsuranceManager.Infrastructure.Queue;
 
-public class HueyTaskRunnerAdapter : IHueyTaskRunner
+public class QueueTaskRunnerAdapter : IQueueTaskAdapter
 {
     private readonly string _hueyDir;
 
-    public HueyTaskRunnerAdapter(IConfiguration configuration)
+    public QueueTaskRunnerAdapter(IConfiguration configuration)
     {
         _hueyDir = configuration["Huey:QueuePath"] ?? "/app/huey_data";
     }
