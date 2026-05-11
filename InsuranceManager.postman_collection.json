@@ -1,0 +1,378 @@
+{
+  "info": {
+    "_postman_id": "e930d1e4-a7a1-4958-aee7-45a7081abe9a",
+    "name": "InsuranceManager",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "14645549"
+  },
+  "item": [
+    {
+      "name": "1. Health Check",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:5000/health",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "health"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "2. Criar Proposta",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-API-Key",
+            "value": "dev-api-key-change-in-production",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"clientName\": \"Test Client22222\",\r\n    \"coverageType\": 1\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/proposals",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "proposals"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "3. Busca Todas Propostas",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-API-Key",
+            "value": "dev-api-key-change-in-production",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:5000/api/proposals",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "proposals"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "3.5 Busca Propostas por Status",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-API-Key",
+            "value": "dev-api-key-change-in-production",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:5000/api/proposals?status=EmAnalise",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "proposals"
+          ],
+          "query": [
+            {
+              "key": "status",
+              "value": "EmAnalise"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "4. Detalhes da Proposta",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-API-Key",
+            "value": "dev-api-key-change-in-production",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"status\": 1\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/proposals/b4bcaa95-2287-44a5-a60e-a6f2fd0c98e1",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "proposals",
+            "b4bcaa95-2287-44a5-a60e-a6f2fd0c98e1"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "4. Atualiza Status (Aprovada)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-API-Key",
+            "value": "dev-api-key-change-in-production",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"status\": 1\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/proposals/c0fe1240-69f6-4d30-b81a-5c5f717e92de/status",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "proposals",
+            "c0fe1240-69f6-4d30-b81a-5c5f717e92de",
+            "status"
+          ]
+        },
+        "description": "Generated from cURL: curl -X POST http://localhost:5000/api/proposals/{id}/status -H \"Content-Type: application/json\" -H \"X-API-Key: your-secret-api-key-here\" -d '{\"status\":\"Aprovada\"}'"
+      },
+      "response": []
+    },
+    {
+      "name": "4.5 Atualiza Status (Reprovada)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-API-Key",
+            "value": "dev-api-key-change-in-production",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"status\": 2\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/proposals/c0fe1240-69f6-4d30-b81a-5c5f717e92de/status",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "proposals",
+            "c0fe1240-69f6-4d30-b81a-5c5f717e92de",
+            "status"
+          ]
+        },
+        "description": "Generated from cURL: curl -X POST http://localhost:5000/api/proposals/{id}/status -H \"Content-Type: application/json\" -H \"X-API-Key: your-secret-api-key-here\" -d '{\"status\":\"Aprovada\"}'"
+      },
+      "response": []
+    },
+    {
+      "name": "5. Criar Apólice",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-API-Key",
+            "value": "dev-api-key-change-in-production",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/proposals/c0fe1240-69f6-4d30-b81a-5c5f717e92de/contract",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "proposals",
+            "c0fe1240-69f6-4d30-b81a-5c5f717e92de",
+            "contract"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "6. Busca Todas Apólices",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-API-Key",
+            "value": "dev-api-key-change-in-production",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:5000/api/policies",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "policies"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "7. Detalhes da Apólice",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "X-API-Key",
+            "value": "dev-api-key-change-in-production",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:5000/api/policies/0bb33127-589b-4501-ac59-7f1a30785d54",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "policies",
+            "0bb33127-589b-4501-ac59-7f1a30785d54"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
