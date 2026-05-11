@@ -7,42 +7,49 @@
 
 Requirements for initial release. Each maps to roadmap phases.
 
-### Proposals
+### Proposal Management
 
-- [ ] **PROP-01**: User can create a proposal with basic fields (client name, coverage type)
-- [ ] **PROP-02**: User can list all proposals with optional filters (status, date range)
-- [ ] **PROP-03**: User can get a single proposal by ID
-- [x] **PROP-04**: User can change proposal status via async queue (Huey)
-- [ ] **PROP-05**: Proposal status transitions: Em Analise → Aprovada or Recusada
+- [x] **PROP-01**: User can create proposal with client name and coverage type
+- [x] **PROP-02**: User can list all proposals via GET /api/proposals
+- [x] **PROP-03**: User can get a single proposal by ID
+- [x] **PROP-04**: Proposal status changes execute asynchronously via Huey queue
+- [x] **PROP-05**: Invalid status transitions are rejected (state machine)
 
-### Policies
+### Policy Management
 
-- [ ] **POLI-01**: Policy is automatically created when approved proposal is contracted
-- [ ] **POLI-02**: Policy stores the 32-char insured asset token
-- [ ] **POLI-03**: User can list all policies with optional filters
-- [ ] **POLI-04**: User can get a single policy by ID
+- [x] **POLI-01**: System automatically creates a policy when user contracts an approved proposal
+- [x] **POLI-02**: User can list all policies via GET /api/policies
+- [x] **POLI-03**: User can get a single policy by ID
+- [x] **POLI-04**: Policy contains a 32-character asset token
 
-### CQRS
+### Architecture
 
-- [ ] **CQRS-01**: Write operations use dedicated command adapters
-- [ ] **CQRS-02**: Read operations use dedicated read adapters/projections
-- [ ] **CQRS-03**: Read projections optimized for queries (filtered listings)
+- [x] **CQRS-01**: Write operations use dedicated command adapters
+- [x] **CQRS-02**: Read operations use dedicated read adapters with optimized projections
+- [x] **CQRS-03**: IProposalReadAdapter port interface for CQRS read operations
+- [x] **PERS-01**: SQLite database initialized with proper schema on startup
+- [x] **PERS-02**: Persistence adapter isolated in Infrastructure layer
 
 ### Authentication
 
-- [ ] **AUTH-01**: API Key authentication on all endpoints
-- [ ] **AUTH-02**: Invalid API Key returns 401 Unauthorized
-
-### Persistence
-
-- [ ] **PERS-01**: SQLite as primary database
-- [ ] **PERS-02**: Database adapter follows port/interface pattern (swappable)
+- [x] **AUTH-01**: All API endpoints require valid API Key in X-API-Key header
+- [x] **AUTH-02**: Requests with missing or invalid API Key receive 401 Unauthorized
 
 ### Infrastructure
 
-- [ ] **INFR-01**: Docker container for API
-- [ ] **INFR-02**: Huey worker runs as separate process/container
-- [ ] **INFR-03**: Huey filesystem broker works on Windows and Docker
+- [x] **INFR-01**: API runs in Docker container with proper health endpoints
+- [x] **INFR-02**: Huey worker runs as separate container/process
+- [x] **INFR-03**: Huey filesystem broker configured for Windows and Docker
+
+## v1.1 Requirements
+
+Bugfixes and stability improvements for v1.1 milestone.
+
+### Huey Worker Fixes
+
+- [ ] **BUG-01**: Huey container starts without errors
+- [ ] **BUG-02**: Huey worker connects to filesystem broker and processes tasks
+- [ ] **BUG-03**: Shared volume between API and Huey containers works correctly
 
 ## v2 Requirements
 
@@ -50,18 +57,13 @@ Deferred to future release. Tracked but not in current roadmap.
 
 ### Notifications
 
-- **NOTF-01**: Webhook events on policy.bound
-- **NOTF-02**: Webhook events on status changes
+- **NOTF-01**: User receives notification when proposal status changes
+- **NOTF-02**: User receives notification when policy is created
 
-### Observability
+### Reporting
 
-- **OBS-01**: Health check endpoint (/health)
-- **OBS-02**: Readiness probe endpoint (/ready)
-- **OBS-03**: Request correlation IDs
-
-### Audit
-
-- **AUDT-01**: State transition audit trail
+- **RPRT-01**: User can view proposal statistics
+- **RPRT-02**: User can view policy statistics
 
 ## Out of Scope
 
@@ -69,45 +71,47 @@ Explicitly excluded. Documented to prevent scope creep.
 
 | Feature | Reason |
 |---------|--------|
-| JWT Authentication | API Key is sufficient for service-to-service communication |
-| Claims Management | Domain complexity, deferred to v2+ |
-| Multi-item insured | Single token per policy per constraints |
-| Rating/Premium calculation | Not in domain scope |
-| PDF policy documents | Simple JSON policy first |
-| Multi-carrier support | Single carrier for v1 |
-| Multi-tenant isolation | Single-tenant for v1 simplicity |
+| JWT authentication | API Key sufficient for v1 |
+| Multiple insured items | Single 32-char token per policy |
+| Claims management | Complex domain, defer to v2+ |
+| Multi-user authentication | API Key for services, not users |
+| Multiple persistence adapters | SQLite only for v1 |
+| External message brokers | Filesystem broker sufficient |
 
 ## Traceability
 
-Which phases cover which requirements. Updated during roadmap creation.
-
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| PROP-01 | Phase 1 | Pending |
-| PROP-02 | Phase 1 | Pending |
-| PROP-03 | Phase 1 | Pending |
+| PROP-01 | Phase 1 | Complete |
+| PROP-02 | Phase 1 | Complete |
+| PROP-03 | Phase 1 | Complete |
 | PROP-04 | Phase 2 | Complete |
-| PROP-05 | Phase 2 | Pending |
-| POLI-01 | Phase 1 | Pending |
-| POLI-02 | Phase 1 | Pending |
-| POLI-03 | Phase 1 | Pending |
-| POLI-04 | Phase 1 | Pending |
-| CQRS-01 | Phase 1 | Pending |
-| CQRS-02 | Phase 2 | Pending |
-| CQRS-03 | Phase 2 | Pending |
-| AUTH-01 | Phase 2 | Pending |
-| AUTH-02 | Phase 2 | Pending |
-| PERS-01 | Phase 1 | Pending |
-| PERS-02 | Phase 1 | Pending |
-| INFR-01 | Phase 3 | Pending |
-| INFR-02 | Phase 3 | Pending |
-| INFR-03 | Phase 3 | Pending |
+| PROP-05 | Phase 2 | Complete |
+| POLI-01 | Phase 1 | Complete |
+| POLI-02 | Phase 1 | Complete |
+| POLI-03 | Phase 1 | Complete |
+| POLI-04 | Phase 1 | Complete |
+| CQRS-01 | Phase 1 | Complete |
+| CQRS-02 | Phase 2 | Complete |
+| CQRS-03 | Phase 2 | Complete |
+| PERS-01 | Phase 1 | Complete |
+| PERS-02 | Phase 1 | Complete |
+| AUTH-01 | Phase 2 | Complete |
+| AUTH-02 | Phase 2 | Complete |
+| INFR-01 | Phase 3 | Complete |
+| INFR-02 | Phase 3 | Complete |
+| INFR-03 | Phase 3 | Complete |
+| BUG-01 | Phase 4 | Pending |
+| BUG-02 | Phase 4 | Pending |
+| BUG-03 | Phase 4 | Pending |
 
 **Coverage:**
 - v1 requirements: 19 total
 - Mapped to phases: 19
-- Unmapped: 0
+- Unmapped: 0 ✓
+- v1.1 requirements: 3 total
+- All mapped to Phase 4
 
 ---
 *Requirements defined: 2026-05-09*
-*Last updated: 2026-05-09 after roadmap creation*
+*Last updated: 2026-05-10 after v1.0 milestone shipped, v1.1 started*

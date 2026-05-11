@@ -12,18 +12,20 @@ Proposta de seguro segue fluxo de estados via mensageria assíncrona, resultando
 
 ### Validated
 
-(None yet — ship to validate)
+- [x] Proposta: criar, listar, alterar status via fila (Huey) — v1.0
+- [x] Proposta: transição de estado "Em Análise" → "Aprovada" ou "Recusada" — v1.0
+- [x] Apólice: criada automaticamente ao contratar proposta aprovada — v1.0
+- [x] Consulta: listar propostas e apólices — v1.0
+- [x] Projeções de leitura CQRS (read models) — v1.0
+- [x] Autenticação via API Key — v1.0
+- [x] Persistência SQLite (adaptador agnóstico por design) — v1.0
+- [x] Huey com broker filesystem (funciona em Windows e Docker) — v1.0
 
 ### Active
 
-- [ ] Proposta: criar, listar, alterar status via fila (Huey)
-- [ ] Proposta: transição de estado "Em Análise" → "Aprovada" ou "Recusada"
-- [ ] Apólice: criada automaticamente ao contratar proposta aprovada
-- [ ] Consulta: listar propostas e apólices
-- [ ] Projeções de leitura CQRS (read models)
-- [ ] Autenticação via API Key
-- [ ] Persistência SQLite (adaptador agnóstico por design)
-- [ ] Huey com broker filesystem (funciona em Windows e Docker)
+- [ ] Huey container inicia e conecta ao broker
+- [ ] Huey worker processa tasks da fila filesystem
+- [ ] Outros bugs críticos do v1.0
 
 ### Out of Scope
 
@@ -78,5 +80,14 @@ This document evolves at phase transitions and milestone boundaries.
 3. Audit Out of Scope — reasons still valid?
 4. Update Context with current state
 
+## Current Milestone: v1.1 Bugfixes & Stability
+
+**Goal:** Fix Huey container startup issues and any critical bugs from v1.0
+
+**Target features:**
+- Huey container starts and connects to broker
+- Huey worker processes tasks from filesystem queue
+- Bug fixes for v1.0
+
 ---
-*Last updated: 2026-05-09 after initialization*
+*Last updated: 2026-05-10 after v1.0 milestone shipped*

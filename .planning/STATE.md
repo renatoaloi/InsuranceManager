@@ -1,74 +1,51 @@
 ---
 gsd_state_version: 1.0
-milestone: v1.0
-milestone_name: milestone
-status: complete
-stopped_at: Phase 3 complete - v1.0 milestone achieved
-last_updated: "2026-05-10T20:55:00.000Z"
-last_activity: 2026-05-10 -- Phase 3 complete
+milestone: v1.1
+milestone_name: Bugfixes & Stability
+status: planning
+stopped_at: v1.1 milestone started
+last_updated: "2026-05-10T22:00:00.000Z"
+last_activity: 2026-05-10 -- v1.1 milestone started
 progress:
-  total_phases: 3
-  completed_phases: 3
-  total_plans: 16
-  completed_plans: 16
-  percent: 100
+  total_phases: 0
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
+  percent: 0
 ---
 
 # Project State
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-05-09)
+See: .planning/PROJECT.md (updated 2026-05-10)
 
 **Core value:** Proposta de seguro segue fluxo de estados via mensageria assíncrona, resultando em apólice quando aprovada.
 
-**Current focus:** v1.0 milestone complete
+**Current focus:** v1.1 Bugfixes & Stability
 
 ## Current Position
 
-Phase: 3 (infrastructure) — COMPLETE ✅
-Status: All phases complete
-Last activity: 2026-05-10 -- Phase 3 complete
-
-Progress: [██████████] 100%
-
-## Performance Metrics
-
-**Velocity:**
-
-- Total plans completed: 16
-- Average duration: ~15 min
-- Total execution time: ~4 hours
-
-**By Phase:**
-
-| Phase | Plans | Total | Avg/Plan |
-|-------|-------|-------|----------|
-| 1 | 6 | 6 | ~15 min |
-| 2 | 6 | 6 | ~15 min |
-| 3 | 4 | 4 | ~10 min |
-
-**Recent Trend:**
-
-- Last 4 plans: All completed successfully
-- Trend: Stable
-
-*Updated after each plan completion*
+Phase: Not started (defining requirements)
+Plan: —
+Status: Defining requirements
+Last activity: 2026-05-10 — v1.1 milestone started
 
 ## Accumulated Context
 
-### Decisions
+### v1.0 Validated
 
-- Phase 1: Foundation includes Proposal/Policy CRUD, SQLite persistence, CQRS write adapters
-- Phase 2: Huey async status transitions, CQRS read adapters, API Key authentication
-- Phase 3: Docker containers for API and Huey worker, filesystem broker
+- Proposal CRUD with SQLite persistence
+- Async status transitions via Huey filesystem broker
+- CQRS read models for optimized queries
+- API Key authentication middleware
+- Docker containers for API and Huey worker
 
-## Session Continuity
+### v1.1 Focus
 
-Last session: 2026-05-10
-Stopped at: Phase 3 complete - v1.0 milestone achieved
-Resume file: None
+- Huey container startup fixes
+- Huey worker broker connectivity
+- Critical bug fixes
 
 ---
-
-*State updated: 2026-05-10*
+*State updated: 2026-05-10 after v1.1 milestone started*
