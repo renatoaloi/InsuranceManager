@@ -8,6 +8,26 @@ Sistema de seguros simples com API REST em .NET 10. Gerencia o ciclo de vida de 
 
 Proposta de seguro segue fluxo de estados via mensageria assíncrona, resultando em apólice quando aprovada.
 
+## Current State (v1.0 Shipped)
+
+**Shipped:** 2026-05-11
+**Version:** v1.0 MVP
+**Stack:** .NET 10, C# 12, SQLite, Huey (filesystem broker), Docker
+**Architecture:** Hexagonal / Ports & Adapters / DDD
+**Pattern:** CQRS com adaptadores isolados para leitura e escrita
+
+**What Works:**
+- Proposal CRUD (create, list, get by ID)
+- Proposal status transitions via Huey queue (Em Analise → Aprovada/Recusada)
+- Policy auto-creation when contracting approved proposal
+- API Key authentication (X-API-Key header)
+- SQLite persistence with EF Core
+- Docker containerization (API + Huey worker)
+
+**Known Issues (v1.1 scope):**
+- Huey container startup needs verification
+- Worker connectivity to filesystem broker needs testing
+
 ## Requirements
 
 ### Validated
@@ -25,7 +45,7 @@ Proposta de seguro segue fluxo de estados via mensageria assíncrona, resultando
 
 - [ ] Huey container inicia e conecta ao broker
 - [ ] Huey worker processa tasks da fila filesystem
-- [ ] Outros bugs críticos do v1.0
+- [ ] Verificação end-to-end do processamento de tasks
 
 ### Out of Scope
 
@@ -58,36 +78,21 @@ Proposta de seguro segue fluxo de estados via mensageria assíncrona, resultando
 
 | Decision | Rationale | Outcome |
 |----------|-----------|---------|
-| API Key para auth | Simplicidade — frontend e serviços | — Pending |
-| Huey filesystem broker | Compatibilidade Windows + Docker, sem dependência Redis | — Pending |
-| Item segurado = token 32-char na Policy | Reduzir complexidade v1 | — Pending |
-| Projeções CQRS via read models | Consultas separadas de escrita | — Pending |
+| API Key para auth | Simplicidade — frontend e serviços | ✅ Works in v1.0 |
+| Huey filesystem broker | Compatibilidade Windows + Docker, sem dependência Redis | ✅ Configured, testing in v1.1 |
+| Item segurado = token 32-char na Policy | Reduzir complexidade v1 | ✅ Implemented |
+| Projeções CQRS via read models | Consultas separadas de escrita | ✅ IProposalReadAdapter implemented |
 
-## Evolution
-
-This document evolves at phase transitions and milestone boundaries.
-
-**After each phase transition** (via `/gsd-transition`):
-1. Requirements invalidated? → Move to Out of Scope with reason
-2. Requirements validated? → Move to Validated with phase reference
-3. New requirements emerged? → Add to Active
-4. Decisions to log? → Add to Key Decisions
-5. "What This Is" still accurate? → Update if drifted
-
-**After each milestone** (via `/gsd-complete-milestone`):
-1. Full review of all sections
-2. Core Value check — still the right priority?
-3. Audit Out of Scope — reasons still valid?
-4. Update Context with current state
-
-## Current Milestone: v1.1 Bugfixes & Stability
+## Next Milestone Goals (v1.1)
 
 **Goal:** Fix Huey container startup issues and any critical bugs from v1.0
 
 **Target features:**
 - Huey container starts and connects to broker
 - Huey worker processes tasks from filesystem queue
-- Bug fixes for v1.0
+- End-to-end verification of task processing
 
 ---
-*Last updated: 2026-05-10 after v1.0 milestone shipped*
+
+*Last updated: 2026-05-11 after v1.0 milestone shipped*
+*Archived: .planning/milestones/v1.0-ROADMAP.md, v1.0-REQUIREMENTS.md*
